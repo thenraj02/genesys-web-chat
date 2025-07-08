@@ -1,27 +1,139 @@
-<!-- Reset Button -->
-<button onclick="Genesys('command', 'Messenger.reset')">
-  🔄 Start New Chat
-</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DreamTours Bot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
 
-<!-- Genesys Messenger Script -->
-<script type="text/javascript" charset="utf-8">
-  (function (g, e, n, es, ys) {
-    g['_genesysJs'] = e;
-    g[e] = g[e] || function () {
-      (g[e].q = g[e].q || []).push(arguments)
-    };
-    g[e].t = 1 * new Date();
-    g[e].c = es;
-    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
-  })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
-    environment: 'prod-euc1',
-    deploymentId: '079ae441-6674-4fc2-9dbc-fc5591fd3d10'
-  });
-</script>
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
 
-<!-- Reset Messenger after it's ready -->
-<script>
-  Genesys('subscribe', 'Messenger.ready', function () {
-    Genesys('command', 'Messenger.reset');
-  });
-</script>
+    nav {
+      background-color: #0056b3;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    footer {
+      background-color: #ddd;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to DreamTours</h1>
+    <p>Your one-stop solution for planning dream vacations!</p>
+  </header>
+
+  <nav>
+    <a href="#destinations">Destinations</a>
+    <a href="#book">Book a Tour</a>
+    <a href="#packages">Packages</a>
+    <a href="#about">About Us</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main>
+    <section id="destinations">
+      <h2>🌍 Popular Destinations</h2>
+      <p>Explore Goa, Paris, Maldives, Bali, and more.</p>
+    </section>
+
+    <section id="book">
+      <h2>📅 Book a Tour</h2>
+      <p>Chat with our assistant below to start booking!</p>
+      <button onclick="Genesys('command', 'Messenger.reset')">🔄 Start New Chat</button>
+    </section>
+
+    <section id="packages">
+      <h2>📦 Tour Packages</h2>
+      <p>Customizable family, solo, and honeymoon packages available.</p>
+    </section>
+
+    <section id="about">
+      <h2>ℹ️ About Us</h2>
+      <p>We’re a passionate team helping people travel smarter with AI support.</p>
+    </section>
+
+    <section id="contact">
+      <h2>📞 Contact</h2>
+      <p>Email: support@dreamtours.com | Phone: +91-98765-43210</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 DreamTours. All rights reserved.
+  </footer>
+
+  <!-- Genesys Messenger Script -->
+  <script type="text/javascript" charset="utf-8">
+    (function (g, e, n, es, ys) {
+      g['_genesysJs'] = e;
+      g[e] = g[e] || function () {
+        (g[e].q = g[e].q || []).push(arguments)
+      };
+      g[e].t = 1 * new Date();
+      g[e].c = es;
+      ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+    })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
+      environment: 'prod-euc1',
+      deploymentId: '079ae441-6674-4fc2-9dbc-fc5591fd3d10'
+    });
+  </script>
+
+  <!-- Reset Messenger after it's ready -->
+  <script>
+    Genesys('subscribe', 'Messenger.ready', function () {
+      Genesys('command', 'Messenger.reset');
+    });
+  </script>
+</body>
+</html>
