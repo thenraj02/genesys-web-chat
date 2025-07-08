@@ -1,64 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>DreamTour Bot</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      padding: 20px;
-    }
-    h1 {
-      color: #2c3e50;
-    }
-    button {
-      padding: 12px 20px;
-      background-color: #0077cc;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 20px;
-    }
-    button:hover {
-      background-color: #005fa3;
-    }
-  </style>
-</head>
-<body>
+<!-- Reset Button -->
+<button onclick="Genesys('command', 'Messenger.reset')">
+  🔄 Start New Chat
+</button>
 
-  <h1>Welcome to DreamTours</h1>
-  <p>Our assistant is ready to help you plan your perfect vacation!</p>
-
-  <!-- Reset Button -->
-  <button onclick="Genesys('command', 'Messenger.reset')">
-    🔄 Start New Chat
-  </button>
-
-  <!-- Genesys Web Messenger Script -->
-  <script type="text/javascript" charset="utf-8">
-    (function (g, e, n, es, ys) {
-      g['_genesysJs'] = e;
-      g[e] = g[e] || function () {
-        (g[e].q = g[e].q || []).push(arguments)
-      };
-      g[e].t = 1 * new Date();
-      g[e].c = es;
-      ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
-    })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
-      environment: 'prod-euc1',
-      deploymentId: '079ae441-6674-4fc2-9dbc-fc5591fd3d10'  <!-- Replace with your own if needed -->
-    });
-  </script>
-
-  <!-- Auto-reset chat on page load -->
-  <script>
-    window.onload = function () {
-      Genesys('command', 'Messenger.reset');
+<!-- Genesys Messenger Script -->
+<script type="text/javascript" charset="utf-8">
+  (function (g, e, n, es, ys) {
+    g['_genesysJs'] = e;
+    g[e] = g[e] || function () {
+      (g[e].q = g[e].q || []).push(arguments)
     };
-  </script>
+    g[e].t = 1 * new Date();
+    g[e].c = es;
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+  })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
+    environment: 'prod-euc1',
+    deploymentId: '079ae441-6674-4fc2-9dbc-fc5591fd3d10'
+  });
+</script>
 
-</body>
-</html>
+<!-- Reset Messenger after it's ready -->
+<script>
+  Genesys('subscribe', 'Messenger.ready', function () {
+    Genesys('command', 'Messenger.reset');
+  });
+</script>
