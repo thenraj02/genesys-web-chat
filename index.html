@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DreamTours - Plan Your Dream Vacation</title>
-  <meta name="keywords" content="destinations, travel, vacation, beach, Maldives, Dubai, China, London">
+  <meta name="keywords" content="destinations, travel, vacation, Maldives, Dubai, China, London" />
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -29,6 +30,7 @@
       color: white;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
     }
     .section {
       padding: 2rem;
@@ -64,6 +66,23 @@
       cursor: pointer;
     }
   </style>
+
+  <!-- Hybrid JS logic for conditional chat trigger -->
+  <script>
+    function triggerChatIfOffered() {
+      Genesys('command', 'Journey.get', {
+        journeyPoints: ['offers'],
+        callback: function (data) {
+          if (data && data.offers && data.offers.length > 0) {
+            Genesys('command', 'Messenger.open');
+          } else {
+            console.log("Chat not triggered: No active offer available for this user.");
+          }
+        }
+      });
+    }
+  </script>
+
 </head>
 <body>
   <header>
@@ -72,9 +91,9 @@
   </header>
 
   <nav>
-    <a href="#destinations">Destinations</a>
-    <a href="#book">Book a Tour</a>
-    <a href="#packages">Packages</a>
+    <a href="#destinations" onclick="triggerChatIfOffered()">Destinations</a>
+    <a href="#book" onclick="triggerChatIfOffered()">Book a Tour</a>
+    <a href="#packages" onclick="triggerChatIfOffered()">Packages</a>
     <a href="#about">About Us</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -91,7 +110,7 @@
         <h3>Dubai</h3>
       </div>
       <div class="card">
-        <img src="https://github.com/thenraj02/Image/blob/main/maldives.jpg?raw=true" alt="Dubai" width="300">
+        <img src="https://github.com/thenraj02/Image/blob/main/maldives.jpg?raw=true" alt="Maldives" width="300">
         <h3>Maldives</h3>
       </div>
       <div class="card">
@@ -100,8 +119,6 @@
       </div>
     </div>
   </div>
-
-
 
   <div class="section" id="book">
     <h2>🗓️ Book a Tour</h2>
@@ -124,7 +141,7 @@
     <p>Email: support@dreamtours.com | Phone: +91-9876543210</p>
   </div>
 
-  <!-- Genesys Web Messaging Script (replace deploymentId) -->
+  <!-- Genesys Web Messaging Script -->
  <script type="text/javascript" charset="utf-8">
     (function (g, e, n, es, ys) {
       g['_genesysJs'] = e;
