@@ -68,19 +68,6 @@
   </style>
 
   <script>
-    function triggerChatIfOffered() {
-      Genesys('command', 'Journey.get', {
-        journeyPoints: ['offers'],
-        callback: function (data) {
-          if (data && data.offers && data.offers.length > 0) {
-            Genesys('command', 'Messenger.open');
-          } else {
-            console.log("Chat not triggered: No active offer available for this user.");
-          }
-        }
-      });
-    }
-
     // Safe wrapper to wait until Genesys is fully ready
     function waitForGenesys(callback, interval = 100, timeout = 10000) {
       const start = Date.now();
@@ -93,6 +80,21 @@
           console.warn("❌ Genesys not ready after timeout.");
         }
       }, interval);
+    }
+
+    function triggerChatIfOffered() {
+      waitForGenesys(() => {
+        Genesys('command', 'Journey.get', {
+          journeyPoints: ['offers'],
+          callback: function (data) {
+            if (data && data.offers && data.offers.length > 0) {
+              Genesys('command', 'Messenger.open');
+            } else {
+              console.log("Chat not triggered: No active offer available for this user.");
+            }
+          }
+        });
+      });
     }
 
     window.addEventListener('load', function () {
@@ -152,7 +154,7 @@
   <div class="section" id="book">
     <h2>🗓️ Book a Tour</h2>
     <p>Chat with our assistant below to start booking!</p>
-    <button class="start-chat" onclick="Genesys('command', 'Messenger.open')">Start New Chat</button>
+    <button class="start-chat" onclick="triggerChatIfOffered()">Start New Chat</button>
   </div>
 
   <div class="section" id="packages">
@@ -170,7 +172,7 @@
     <p>Email: support@dreamtours.com | Phone: +91-9876543210</p>
   </div>
 
- <!-- Genesys Web Messaging Script -->
+   <!-- Genesys Web Messaging Script -->
  <script type="text/javascript" charset="utf-8">
     (function (g, e, n, es, ys) {
       g['_genesysJs'] = e;
