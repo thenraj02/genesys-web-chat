@@ -84,6 +84,26 @@
   </script>
 
 </head>
+  <script>
+  window.addEventListener('load', function () {
+    if (typeof Genesys !== 'undefined') {
+      Genesys('command', 'Journey.get', {
+        journeyPoints: ['offers'],
+        callback: function (data) {
+          console.log("✅ PE offers from embedded script:", data);
+          if (data && data.offers && data.offers.length > 0) {
+            alert("🎯 PE OFFER AVAILABLE – Chat should open if triggered.");
+          } else {
+            alert("⚠️ No PE offer available – Action Map did not match.");
+          }
+        }
+      });
+    } else {
+      console.warn("Genesys Web Messenger script not loaded yet.");
+    }
+  });
+</script>
+
 <body>
   <header>
     <h1>Welcome to DreamTours</h1>
