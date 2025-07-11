@@ -80,6 +80,36 @@
         }
       });
     }
+
+    // Safe wrapper to wait until Genesys is fully ready
+    function waitForGenesys(callback, interval = 100, timeout = 10000) {
+      const start = Date.now();
+      const timer = setInterval(() => {
+        if (typeof Genesys !== 'undefined' && typeof Genesys === 'function') {
+          clearInterval(timer);
+          callback();
+        } else if (Date.now() - start > timeout) {
+          clearInterval(timer);
+          console.warn("❌ Genesys not ready after timeout.");
+        }
+      }, interval);
+    }
+
+    window.addEventListener('load', function () {
+      waitForGenesys(() => {
+        Genesys('command', 'Journey.get', {
+          journeyPoints: ['offers'],
+          callback: function (data) {
+            console.log("✅ PE offers from embedded script:", data);
+            if (data && data.offers && data.offers.length > 0) {
+              alert("🎯 PE OFFER AVAILABLE – Chat will trigger if customer clicks a section.");
+            } else {
+              alert("⚠️ No PE offer matched – check Action Map setup in Genesys Cloud.");
+            }
+          }
+        });
+      });
+    });
   </script>
 </head>
 
@@ -140,28 +170,7 @@
     <p>Email: support@dreamtours.com | Phone: +91-9876543210</p>
   </div>
 
-  <!-- ✅ Genesys Journey Offer Test Logic -->
-  <script>
-    window.addEventListener('load', function () {
-      if (typeof Genesys !== 'undefined') {
-        Genesys('command', 'Journey.get', {
-          journeyPoints: ['offers'],
-          callback: function (data) {
-            console.log("✅ PE offers from embedded script:", data);
-            if (data && data.offers && data.offers.length > 0) {
-              alert("🎯 PE OFFER AVAILABLE – Chat will trigger if customer clicks a section.");
-            } else {
-              alert("⚠️ No PE offer matched – check Action Map setup in Genesys Cloud.");
-            }
-          }
-        });
-      } else {
-        console.warn("Genesys Web Messenger script not loaded.");
-      }
-    });
-  </script>
-
-  <!-- Genesys Web Messaging Script -->
+ <!-- Genesys Web Messaging Script -->
  <script type="text/javascript" charset="utf-8">
     (function (g, e, n, es, ys) {
       g['_genesysJs'] = e;
