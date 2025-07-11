@@ -68,50 +68,13 @@
   </style>
 
   <script>
-    // Safe wrapper to wait until Genesys is fully ready
-    function waitForGenesys(callback, interval = 100, timeout = 10000) {
-      const start = Date.now();
-      const timer = setInterval(() => {
-        if (typeof Genesys !== 'undefined' && typeof Genesys === 'function') {
-          clearInterval(timer);
-          callback();
-        } else if (Date.now() - start > timeout) {
-          clearInterval(timer);
-          console.warn("❌ Genesys not ready after timeout.");
-        }
-      }, interval);
+    function openChat() {
+      if (typeof Genesys !== 'undefined') {
+        Genesys('command', 'Messenger.open');
+      } else {
+        console.warn("Genesys not loaded.");
+      }
     }
-
-    function triggerChatIfOffered() {
-      waitForGenesys(() => {
-        Genesys('command', 'Journey.get', {
-          journeyPoints: ['offers'],
-          callback: function (data) {
-            if (data && data.offers && data.offers.length > 0) {
-              Genesys('command', 'Messenger.open');
-            } else {
-              console.log("Chat not triggered: No active offer available for this user.");
-            }
-          }
-        });
-      });
-    }
-
-    window.addEventListener('load', function () {
-      waitForGenesys(() => {
-        Genesys('command', 'Journey.get', {
-          journeyPoints: ['offers'],
-          callback: function (data) {
-            console.log("✅ PE offers from embedded script:", data);
-            if (data && data.offers && data.offers.length > 0) {
-              alert("🎯 PE OFFER AVAILABLE – Chat will trigger if customer clicks a section.");
-            } else {
-              alert("⚠️ No PE offer matched – check Action Map setup in Genesys Cloud.");
-            }
-          }
-        });
-      });
-    });
   </script>
 </head>
 
@@ -122,9 +85,9 @@
   </header>
 
   <nav>
-    <a href="#destinations" onclick="triggerChatIfOffered()">Destinations</a>
-    <a href="#book" onclick="triggerChatIfOffered()">Book a Tour</a>
-    <a href="#packages" onclick="triggerChatIfOffered()">Packages</a>
+    <a href="#destinations" onclick="openChat()">Destinations</a>
+    <a href="#book" onclick="openChat()">Book a Tour</a>
+    <a href="#packages" onclick="openChat()">Packages</a>
     <a href="#about">About Us</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -133,19 +96,19 @@
     <h2>🌍 Popular Destinations</h2>
     <div class="destinations">
       <div class="card">
-        <img src="https://github.com/thenraj02/Image/blob/main/chinas.jpg?raw=true" alt="China" />
+        <img src="https://github.com/thenraj02/Image/blob/main/chinas.jpg?raw=true" alt="China">
         <h3>China</h3>
       </div>
       <div class="card">
-        <img src="https://github.com/thenraj02/Image/blob/main/dubai.jpg?raw=true" alt="Dubai" />
+        <img src="https://github.com/thenraj02/Image/blob/main/dubai.jpg?raw=true" alt="Dubai">
         <h3>Dubai</h3>
       </div>
       <div class="card">
-        <img src="https://github.com/thenraj02/Image/blob/main/maldives.jpg?raw=true" alt="Maldives" />
+        <img src="https://github.com/thenraj02/Image/blob/main/maldives.jpg?raw=true" alt="Maldives">
         <h3>Maldives</h3>
       </div>
       <div class="card">
-        <img src="https://github.com/thenraj02/Image/blob/main/london.jpg?raw=true" alt="London" />
+        <img src="https://github.com/thenraj02/Image/blob/main/london.jpg?raw=true" alt="London">
         <h3>London</h3>
       </div>
     </div>
@@ -153,8 +116,8 @@
 
   <div class="section" id="book">
     <h2>🗓️ Book a Tour</h2>
-    <p>Chat with our assistant below to start booking!</p>
-    <button class="start-chat" onclick="triggerChatIfOffered()">Start New Chat</button>
+    <p>Click below to chat with our assistant!</p>
+    <button class="start-chat" onclick="openChat()">Start New Chat</button>
   </div>
 
   <div class="section" id="packages">
@@ -172,21 +135,24 @@
     <p>Email: support@dreamtours.com | Phone: +91-9876543210</p>
   </div>
 
-   <!-- Genesys Web Messaging Script -->
- <script type="text/javascript" charset="utf-8">
+  <!-- Genesys Web Messaging -->
+  <script type="text/javascript">
     (function (g, e, n, es, ys) {
       g['_genesysJs'] = e;
       g[e] = g[e] || function () {
-        (g[e].q = g[e].q || []).push(arguments)
+        (g[e].q = g[e].q || []).push(arguments);
       };
       g[e].t = 1 * new Date();
       g[e].c = es;
-      ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+      ys = document.createElement('script');
+      ys.async = 1;
+      ys.src = n;
+      ys.charset = 'utf-8';
+      document.head.appendChild(ys);
     })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
       environment: 'prod-euc1',
       deploymentId: '079ae441-6674-4fc2-9dbc-fc5591fd3d10'
     });
   </script>
-
 </body>
 </html>
