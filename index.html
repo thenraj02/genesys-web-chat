@@ -67,7 +67,6 @@
     }
   </style>
 
-  <!-- Hybrid JS logic for conditional chat trigger -->
   <script>
     function triggerChatIfOffered() {
       Genesys('command', 'Journey.get', {
@@ -82,27 +81,7 @@
       });
     }
   </script>
-
 </head>
-  <script>
-  window.addEventListener('load', function () {
-    if (typeof Genesys !== 'undefined') {
-      Genesys('command', 'Journey.get', {
-        journeyPoints: ['offers'],
-        callback: function (data) {
-          console.log("✅ PE offers from embedded script:", data);
-          if (data && data.offers && data.offers.length > 0) {
-            alert("🎯 PE OFFER AVAILABLE – Chat should open if triggered.");
-          } else {
-            alert("⚠️ No PE offer available – Action Map did not match.");
-          }
-        }
-      });
-    } else {
-      console.warn("Genesys Web Messenger script not loaded yet.");
-    }
-  });
-</script>
 
 <body>
   <header>
@@ -122,19 +101,19 @@
     <h2>🌍 Popular Destinations</h2>
     <div class="destinations">
       <div class="card">
-        <img src="https://github.com/thenraj02/Image/blob/main/chinas.jpg?raw=true" alt="China" width="300">
+        <img src="https://github.com/thenraj02/Image/blob/main/chinas.jpg?raw=true" alt="China" />
         <h3>China</h3>
       </div>
       <div class="card">
-        <img src="https://github.com/thenraj02/Image/blob/main/dubai.jpg?raw=true" alt="Dubai" width="300">
+        <img src="https://github.com/thenraj02/Image/blob/main/dubai.jpg?raw=true" alt="Dubai" />
         <h3>Dubai</h3>
       </div>
       <div class="card">
-        <img src="https://github.com/thenraj02/Image/blob/main/maldives.jpg?raw=true" alt="Maldives" width="300">
+        <img src="https://github.com/thenraj02/Image/blob/main/maldives.jpg?raw=true" alt="Maldives" />
         <h3>Maldives</h3>
       </div>
       <div class="card">
-        <img src="https://github.com/thenraj02/Image/blob/main/london.jpg?raw=true" alt="London" width="300">
+        <img src="https://github.com/thenraj02/Image/blob/main/london.jpg?raw=true" alt="London" />
         <h3>London</h3>
       </div>
     </div>
@@ -161,6 +140,27 @@
     <p>Email: support@dreamtours.com | Phone: +91-9876543210</p>
   </div>
 
+  <!-- ✅ Genesys Journey Offer Test Logic -->
+  <script>
+    window.addEventListener('load', function () {
+      if (typeof Genesys !== 'undefined') {
+        Genesys('command', 'Journey.get', {
+          journeyPoints: ['offers'],
+          callback: function (data) {
+            console.log("✅ PE offers from embedded script:", data);
+            if (data && data.offers && data.offers.length > 0) {
+              alert("🎯 PE OFFER AVAILABLE – Chat will trigger if customer clicks a section.");
+            } else {
+              alert("⚠️ No PE offer matched – check Action Map setup in Genesys Cloud.");
+            }
+          }
+        });
+      } else {
+        console.warn("Genesys Web Messenger script not loaded.");
+      }
+    });
+  </script>
+
   <!-- Genesys Web Messaging Script -->
  <script type="text/javascript" charset="utf-8">
     (function (g, e, n, es, ys) {
@@ -176,5 +176,6 @@
       deploymentId: '079ae441-6674-4fc2-9dbc-fc5591fd3d10'
     });
   </script>
+
 </body>
 </html>
