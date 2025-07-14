@@ -85,25 +85,20 @@
 
 <!-- Genesys SDK Bootstrap -->
 <script type="text/javascript" charset="utf-8">
-  (function (g, e, n, s, y) {
+  (function (g, e, n, es, ys) {
     g['_genesysJs'] = e;
     g[e] = g[e] || function () {
-      (g[e].q = g[e].q || []).push(arguments);
+      (g[e].q = g[e].q || []).push(arguments)
     };
     g[e].t = 1 * new Date();
-    g[e].c = s;
-    y = document.createElement('script');
-    y.async = 1;
-    y.src = n;
-    y.charset = 'utf-8';
-    document.head.appendChild(y);
-  })(
-    window,
-    'Genesys',
-    'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js',
-    {}
-  );
+    g[e].c = es;
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+  })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
+    environment: 'prod-euc1',
+    deploymentId: '81420fed-3a08-4e99-b0d3-43592ce93fec'
+  });
 </script>
+
 
 <!-- Messenger Initialization -->
 <script>
@@ -118,12 +113,7 @@
     launcher.style.display = "none";
     chatBox.style.display = "block";
 
-    Genesys("subscribe", "ready", async () => {
-      client = await Genesys("messengerExtension").createClient({
-        environment: {
-          environment: 'prod-euc1',
-          deploymentId: '81420fed-3a08-4e99-b0d3-43592ce93fec'
-        }
+            }
       });
 
       await client.connect();
