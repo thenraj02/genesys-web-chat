@@ -173,27 +173,23 @@
   </div>
 
   <!-- Genesys Web Messaging (India Region) -->
-  <script type="text/javascript">
-    (function (g, e, n, d, s) {
+ <script type="text/javascript">
+    (function (g, e, n, es, ys) {
       g['_genesysJs'] = e;
       g[e] = g[e] || function () {
         (g[e].q = g[e].q || []).push(arguments);
       };
       g[e].t = 1 * new Date();
-      g[e].c = 'https://apps.mypurecloud.in';
-      s = document.createElement('script');
-      s.async = 1;
-      s.src = g[e].c + '/genesys-bootstrap/genesys.min.js';
-      d = document.getElementsByTagName('script')[0];
-      d.parentNode.insertBefore(s, d);
-    })(window, 'Genesys');
-
-    Genesys('subscribe', 'Launcher.ready', function () {
-      console.log("DreamBot is ready!");
+      g[e].c = es;
+      ys = document.createElement('script');
+      ys.async = 1;
+      ys.src = n;
+      ys.charset = 'utf-8';
+      document.head.appendChild(ys);
+    })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
+      environment: 'prod-euc1',
+      deploymentId: '079ae441-6674-4fc2-9dbc-fc5591fd3d10'
     });
-
-    // Optional: Auto-open the messenger on page load
-    // Genesys('command', 'Messenger.open');
   </script>
 </body>
 </html>
